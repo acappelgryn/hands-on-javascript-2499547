@@ -1,7 +1,8 @@
 /**
- * Break down a complex function:
- * - Create a new function to build the <img> element.
- * - Make srcset entries conditional on data being available.
+ * Add date to output.
+ * References:
+ * - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+ * - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString
  */
 
 import data from "./data.js";
@@ -13,21 +14,21 @@ const buildImage = (imgData) => {
   if (imgData.urls.regular) {
     srcset = srcset + `, ${imgData.urls.regular} 1080w`;
   }
+
   if (imgData.urls.small) {
     srcset = srcset + `, ${imgData.urls.small} 400w`;
   }
 
   const img = `
   <img
-        srcset="${srcset}"
-        sizes="(max-width: 450px) 400px, (max-width: 800) 1080px"
-        src="${imgData.urls.regular}"
-        width="${imgData.width}"
-        height="${imgData.height}"
-        alt="${imgData.description}"
-        loading="lazy"
-      />
-  `;
+    srcset="${srcset}"
+    sizes="(max-width: 450px) 400px, (max-width: 800) 1080px"
+    src="${imgData.urls.regular}"
+    width="${imgData.width}"
+    height="${imgData.height}"
+    alt="${imgData.description}"
+    loading="lazy"
+  />`;
   return img;
 };
 
@@ -55,9 +56,10 @@ const Card = (data) => {
             <span class="image__photog">${imgData.user.name}</span>.
           </p>
           <p>
-            Uploaded on <time class="image__date" datetime="${
-              imgData.created_at
-            }">${getDate(imgData)}</time>.
+            Uploaded on
+            <time class="image_date" datetime="${imgData.created_at}">
+              ${getDate(imgData)}
+            </time>
           </p>
           <p>
             <a href="${imgData.links.self}" class="image__link">
