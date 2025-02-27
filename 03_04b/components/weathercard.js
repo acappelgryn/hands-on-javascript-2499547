@@ -23,32 +23,38 @@ const tempTranslator = (temp, unit) => {
   }
 };
 
-const weatherCard = (data) => {
+const weatherCard = (data, units) => {
   return `
     <article class="weathercard">
-          <div class="weathercard__meta">
-            <div class="weathercard__meta-location">${data.name}, ${
-    data.sys.country
-  }</div>
-          </div>
-          <div class="weathercard__temp">
-            <span class="temp">${
-              tempTranslator(data.main.temp).c.toFixed(1)
-            }</span><span class="tempunit">°C</span>
-          </div>
-          <div class="weathercard__wind">
-            <div class="weathercard__wind-speed">
-              <span class="speed">${
-                data.wind.speed
-              }</span><span class="windunit">m/s</span>
-            </div>
-            <div class="weathercard__wind-dir" style="transform:rotate(${
-              data.wind.deg + 90
-            }deg)">
-                <span class="screen-reader-text">${data.wind.deg}</span>
-            </div>
-          </div>
-        </article>
+      <div class="weathercard__meta">
+        <div class="weathercard__meta-location">
+          ${data.name}, ${data.sys.country}
+        </div>
+      </div>
+      <div class="weathercard__temp">
+        <span class="temp">
+          ${tempTranslator(data.main.temp, units).value.toFixed(1)}
+        </span>
+        <span class="tempunit">
+          ${tempTranslator(data.main.temp, units).unit}
+        </span>
+      </div>
+      <div class="weathercard__wind">
+        <div class="weathercard__wind-speed">
+          <span class="speed">
+            ${data.wind.speed}
+          </span>
+          <span class="windunit">m/s</span>
+        </div>
+        <div class="weathercard__wind-dir" 
+          style="transform:rotate(${data.wind.deg + 90}deg)">
+          <span class="screen-reader-text">
+            ${data.wind.deg}
+          </span>
+        </div>
+      </div>
+      <button id="units">Change units</button>
+    </article>
     `;
 };
 
